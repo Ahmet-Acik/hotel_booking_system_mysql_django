@@ -1,4 +1,3 @@
-# filepath: /Users/drahmetacik/Projects/hotel_bs_mysql_django/hotel_booking_system/bookings/urls.py
 from django.urls import path
 from . import views
 
