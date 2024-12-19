@@ -1,3 +1,4 @@
+<!-- filepath: /Users/drahmetacik/Projects/hotel_bs_mysql_django/hotel_booking_system/bookings/templates/bookings/guest_list.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,5 +11,6 @@
             <li>{{ guest.name }} - {{ guest.email }}</li>
         {% endfor %}
     </ul>
+    <a href="{% url 'guest_create' %}">Add New Guest</a>
 </body>
 </html>
