@@ -1,0 +1,15 @@
+<!-- filepath: /Users/drahmetacik/Projects/hotel_bs_mysql_django/hotel_booking_system/bookings/templates/bookings/booking_form.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Form</title>
+</head>
+<body>
+    <h1>Booking Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
