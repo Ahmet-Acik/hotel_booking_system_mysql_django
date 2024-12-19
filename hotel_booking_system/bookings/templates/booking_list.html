@@ -1,0 +1,15 @@
+<!-- filepath: /Users/drahmetacik/Projects/hotel_bs_mysql_django/hotel_booking_system/bookings/templates/bookings/booking_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking List</title>
+</head>
+<body>
+    <h1>Booking List</h1>
+    <ul>
+        {% for booking in bookings %}
+            <li>{{ booking.guest.name }} - {{ booking.room.room_number }} - {{ booking.check_in_date }} to {{ booking.check_out_date }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!-- filepath: /Users/drahmetacik/Projects/hotel_bs_mysql_django/hotel_booking_system/bookings/templates/bookings/guest_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guest List</title>
+</head>
+<body>
+    <h1>Guest List</h1>
+    <ul>
+        {% for guest in guests %}
+            <li>{{ guest.name }} - {{ guest.email }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

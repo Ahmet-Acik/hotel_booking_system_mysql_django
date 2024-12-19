@@ -1,0 +1,15 @@
+<!-- filepath: /Users/drahmetacik/Projects/hotel_bs_mysql_django/hotel_booking_system/bookings/templates/bookings/room_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Room List</title>
+</head>
+<body>
+    <h1>Room List</h1>
+    <ul>
+        {% for room in rooms %}
+            <li>{{ room.room_number }} - {{ room.type }} - {{ room.price }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
