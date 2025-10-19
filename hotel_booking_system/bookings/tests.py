@@ -30,5 +30,28 @@ class BookingModelTest(TestCase):
 		self.assertEqual(booking.status, "Confirmed")
 		self.assertEqual(booking.guest.email, "jane@example.com")
 
+class PaymentModelTest(TestCase):
+	def setUp(self):
+		self.guest = Guest.objects.create(name="Alice", email="alice@example.com")
+		self.room = Room.objects.create(room_number="103", type="Suite", price=200.00, availability=True)
+		self.booking = Booking.objects.create(
+			guest=self.guest,
+			room=self.room,
+			check_in_date=date(2025, 2, 1),
+			check_out_date=date(2025, 2, 3),
+			status="Paid"
+		)
+
+	def test_create_payment(self):
+		payment = Payment.objects.create(
+			booking=self.booking,
+			amount=400.00,
+			payment_date=date(2025, 2, 1),
+			payment_method="Credit Card"
+		)
+		self.assertEqual(payment.amount, 400.00)
+		self.assertEqual(payment.payment_method, "Credit Card")
+
+
 
 
