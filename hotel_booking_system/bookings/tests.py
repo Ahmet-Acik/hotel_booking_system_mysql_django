@@ -14,6 +14,21 @@ class RoomModelTest(TestCase):
 		self.assertEqual(room.room_number, "101")
 		self.assertTrue(room.availability)
 
+class BookingModelTest(TestCase):
+	def setUp(self):
+		self.guest = Guest.objects.create(name="Jane Doe", email="jane@example.com")
+		self.room = Room.objects.create(room_number="102", type="Double", price=150.00, availability=True)
+
+	def test_create_booking(self):
+		booking = Booking.objects.create(
+			guest=self.guest,
+			room=self.room,
+			check_in_date=date(2025, 1, 1),
+			check_out_date=date(2025, 1, 5),
+			status="Confirmed"
+		)
+		self.assertEqual(booking.status, "Confirmed")
+		self.assertEqual(booking.guest.email, "jane@example.com")
 
 
 
