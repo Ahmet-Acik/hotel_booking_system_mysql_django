@@ -4,6 +4,7 @@ from django.test import TestCase
 from .models import Guest, Room, Booking, Payment, Service
 from datetime import date
 from decimal import Decimal
+from django.urls import reverse
 
 class GuestModelTest(TestCase):
 	def test_create_guest(self):
@@ -101,5 +102,17 @@ class ServiceModelTest(TestCase):
 		service = Service.objects.create(name="Breakfast", description="Buffet breakfast", price=20.00)
 		self.assertEqual(service.name, "Breakfast")
 		self.assertEqual(service.price, 20.00)
+
+
+
+class GuestListViewTest(TestCase):
+	def setUp(self):
+		Guest.objects.create(name="Test Guest", email="testguest@example.com")
+
+	def test_guest_list_view_status_code_and_template(self):
+		url = reverse('guest_list')
+		response = self.client.get(url)
+		self.assertEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'bookings/guest_list.html')
 
 
