@@ -52,6 +52,10 @@ class PaymentModelTest(TestCase):
 		self.assertEqual(payment.amount, 400.00)
 		self.assertEqual(payment.payment_method, "Credit Card")
 
-
+class ServiceModelTest(TestCase):
+	def test_create_service(self):
+		service = Service.objects.create(name="Breakfast", description="Buffet breakfast", price=20.00)
+		self.assertEqual(service.name, "Breakfast")
+		self.assertEqual(service.price, 20.00)
 
 
