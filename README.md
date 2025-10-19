@@ -15,39 +15,46 @@ This is a Django-based hotel booking system that allows users to manage guests, 
 ## Installation
 
 1. **Clone the Repository**:
+
    ```sh
    git clone https://github.com/Ahmet-Acik/hotel_bs_mysql_django.git
    cd hotel_bs_mysql_django
    ```
 
 2. **Create a Virtual Environment**:
+
    ```sh
    python -m venv venv
    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
    ```
 
 3. **Install Dependencies**:
+
    ```sh
    pip install -r hotel_booking_system/requirements.txt
    ```
 
 4. **Apply Migrations**:
+
    ```sh
    python hotel_booking_system/manage.py makemigrations
    python hotel_booking_system/manage.py migrate
    ```
 
 5. **Create a Superuser**:
+
    ```sh
    python hotel_booking_system/manage.py createsuperuser
    ```
 
 6. **Run the Development Server**:
+
    ```sh
    python hotel_booking_system/manage.py runserver
    ```
 
 ## Usage
+
 ### Run Tests
 
 To run tests for the bookings app, use:
@@ -149,4 +156,3 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 ## Contact
 
 For any questions or suggestions, please contact [a.acik@icloud.com].
-
