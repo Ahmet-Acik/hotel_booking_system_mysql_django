@@ -161,3 +161,28 @@ class OverlappingBookingTest(TestCase):
 		# This will succeed unless you add custom validation logic to prevent overlaps
 		overlapping.save()
 		self.assertEqual(Booking.objects.filter(room=self.room).count(), 2)
+  
+  # Relationship test: Deleting a Guest cascades to Bookings and Payments
+class GuestCascadeDeleteTest(TestCase):
+	def setUp(self):
+		from decimal import Decimal
+		self.guest = Guest.objects.create(name="CascadeDelete Guest", email="cascadeguest@example.com")
+		self.room = Room.objects.create(room_number="701", type="Single", price=Decimal('100.00'), availability=True)
+		self.booking = Booking.objects.create(
+			guest=self.guest,
+			room=self.room,
+			check_in_date=date(2025, 6, 1),
+			check_out_date=date(2025, 6, 5),
+			status="Confirmed"
+		)
+		self.payment = Payment.objects.create(
+			booking=self.booking,
+			amount=Decimal('400.00'),
+			payment_date=date(2025, 6, 1),
+			payment_method="Credit Card"
+		)
+
+	def test_guest_delete_cascades_booking_and_payment(self):
+		self.guest.delete()
+		self.assertFalse(Booking.objects.filter(id=self.booking.id).exists())
+		self.assertFalse(Payment.objects.filter(id=self.payment.id).exists())
