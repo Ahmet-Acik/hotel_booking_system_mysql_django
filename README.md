@@ -28,26 +28,33 @@ This is a Django-based hotel booking system that allows users to manage guests, 
 
 3. **Install Dependencies**:
    ```sh
-   pip install -r requirements.txt
+   pip install -r hotel_booking_system/requirements.txt
    ```
 
 4. **Apply Migrations**:
    ```sh
-   python manage.py makemigrations
-   python manage.py migrate
+   python hotel_booking_system/manage.py makemigrations
+   python hotel_booking_system/manage.py migrate
    ```
 
 5. **Create a Superuser**:
    ```sh
-   python manage.py createsuperuser
+   python hotel_booking_system/manage.py createsuperuser
    ```
 
 6. **Run the Development Server**:
    ```sh
-   python manage.py runserver
+   python hotel_booking_system/manage.py runserver
    ```
 
 ## Usage
+### Run Tests
+
+To run tests for the bookings app, use:
+
+```sh
+python hotel_booking_system/manage.py test bookings
+```
 
 ### Access the Admin Interface
 
