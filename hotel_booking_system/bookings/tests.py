@@ -21,6 +21,19 @@ class RoomModelTest(TestCase):
 		self.assertEqual(room.room_number, "101")
 		self.assertTrue(room.availability)
 
+	def test_update_room(self):
+		room = Room.objects.create(room_number="201", type="Double", price=120.00, availability=True)
+		room.price = 130.00
+		room.save()
+		updated_room = Room.objects.get(room_number="201")
+		self.assertEqual(updated_room.price, 130.00)
+
+	def test_delete_room(self):
+		room = Room.objects.create(room_number="301", type="Suite", price=200.00, availability=True)
+		room_id = room.id
+		room.delete()
+		self.assertFalse(Room.objects.filter(id=room_id).exists())
+
 class BookingModelTest(TestCase):
 	def setUp(self):
 		self.guest = Guest.objects.create(name="Jane Doe", email="jane@example.com")
