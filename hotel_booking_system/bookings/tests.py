@@ -1,3 +1,4 @@
+from .forms import BookingForm
 from django.test import TestCase
 
 from django.test import TestCase
@@ -115,4 +116,22 @@ class GuestListViewTest(TestCase):
 		self.assertEqual(response.status_code, 200)
 		self.assertTemplateUsed(response, 'bookings/guest_list.html')
 
+class BookingFormTest(TestCase):
+	def setUp(self):
+		from decimal import Decimal
+		self.guest = Guest.objects.create(name="Form Guest", email="formguest@example.com")
+		self.room = Room.objects.create(room_number="501", type="Single", price=Decimal('100.00'), availability=True)
+
+	def test_booking_form_valid(self):
+		data = {
+			'guest': self.guest.id,
+			'room': self.room.id,
+			'check_in_date': '2025-04-01',
+			'check_out_date': '2025-04-05',
+			'status': 'Confirmed'
+		}
+		form = BookingForm(data)
+		self.assertTrue(form.is_valid())
+		booking = form.save()
+		self.assertEqual(booking.status, 'Confirmed')
 
