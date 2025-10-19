@@ -37,6 +37,7 @@ class RoomModelTest(TestCase):
 		room_id = room.id
 		room.delete()
 		self.assertFalse(Room.objects.filter(id=room_id).exists())
+  
 class BookingPaymentCascadeTest(TestCase):
 	def setUp(self):
 		from decimal import Decimal
@@ -103,8 +104,6 @@ class ServiceModelTest(TestCase):
 		service = Service.objects.create(name="Breakfast", description="Buffet breakfast", price=20.00)
 		self.assertEqual(service.name, "Breakfast")
 		self.assertEqual(service.price, 20.00)
-
-
 
 class GuestListViewTest(TestCase):
 	def setUp(self):
