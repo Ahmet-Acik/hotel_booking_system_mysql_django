@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.test import TestCase
 from .models import Guest, Room, Booking, Payment, Service
 from datetime import date
+from decimal import Decimal
 
 class GuestModelTest(TestCase):
 	def test_create_guest(self):
@@ -22,17 +23,40 @@ class RoomModelTest(TestCase):
 		self.assertTrue(room.availability)
 
 	def test_update_room(self):
-		room = Room.objects.create(room_number="201", type="Double", price=120.00, availability=True)
-		room.price = 130.00
+		from decimal import Decimal
+		room = Room.objects.create(room_number="201", type="Double", price=Decimal('120.00'), availability=True)
+		room.price = Decimal('130.00')
 		room.save()
 		updated_room = Room.objects.get(room_number="201")
-		self.assertEqual(updated_room.price, 130.00)
+		self.assertEqual(updated_room.price, Decimal('130.00'))
 
 	def test_delete_room(self):
-		room = Room.objects.create(room_number="301", type="Suite", price=200.00, availability=True)
+		room = Room.objects.create(room_number="301", type="Suite", price=Decimal('200.00'), availability=True)
 		room_id = room.id
 		room.delete()
 		self.assertFalse(Room.objects.filter(id=room_id).exists())
+class BookingPaymentCascadeTest(TestCase):
+	def setUp(self):
+		from decimal import Decimal
+		self.guest = Guest.objects.create(name="Cascade Guest", email="cascade@example.com")
+		self.room = Room.objects.create(room_number="401", type="Suite", price=Decimal('300.00'), availability=True)
+		self.booking = Booking.objects.create(
+			guest=self.guest,
+			room=self.room,
+			check_in_date=date(2025, 3, 1),
+			check_out_date=date(2025, 3, 5),
+			status="Confirmed"
+		)
+		self.payment = Payment.objects.create(
+			booking=self.booking,
+			amount=Decimal('1200.00'),
+			payment_date=date(2025, 3, 1),
+			payment_method="Credit Card"
+		)
+
+	def test_delete_booking_cascades_payment(self):
+		self.booking.delete()
+		self.assertFalse(Payment.objects.filter(id=self.payment.id).exists())
 
 class BookingModelTest(TestCase):
 	def setUp(self):
