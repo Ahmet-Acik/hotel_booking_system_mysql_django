@@ -134,3 +134,30 @@ class BookingFormTest(TestCase):
 		booking = form.save()
 		self.assertEqual(booking.status, 'Confirmed')
 
+# Edge case: Overlapping bookings for the same room
+class OverlappingBookingTest(TestCase):
+	def setUp(self):
+		from decimal import Decimal
+		self.guest1 = Guest.objects.create(name="Overlap Guest 1", email="overlap1@example.com")
+		self.guest2 = Guest.objects.create(name="Overlap Guest 2", email="overlap2@example.com")
+		self.room = Room.objects.create(room_number="601", type="Single", price=Decimal('100.00'), availability=True)
+
+	def test_overlapping_bookings(self):
+		Booking.objects.create(
+			guest=self.guest1,
+			room=self.room,
+			check_in_date=date(2025, 5, 1),
+			check_out_date=date(2025, 5, 5),
+			status="Confirmed"
+		)
+		# Overlapping booking
+		overlapping = Booking(
+			guest=self.guest2,
+			room=self.room,
+			check_in_date=date(2025, 5, 3),
+			check_out_date=date(2025, 5, 7),
+			status="Confirmed"
+		)
+		# This will succeed unless you add custom validation logic to prevent overlaps
+		overlapping.save()
+		self.assertEqual(Booking.objects.filter(room=self.room).count(), 2)
